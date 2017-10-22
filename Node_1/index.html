@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
+<script src="angular.min.js"></script>
+<script>
+var app = angular.module('myApp', []);
+app.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+]);
+app.controller('myCtrl', function ($scope, $http) {
+	$http.get("http://127.0.0.1:3000/")
+	.then(function (response) {
+	//debugger;
+	console.log(response);
+	$scope.datas = response.data;
+	});
+});
+
+</script>
+<body>
+
+    <div ng-app="myApp" ng-controller="myCtrl">
+
+        <table>
+            <tr ng-repeat="data in datas">
+                <td>{{data.empid}}</td>
+                <!--<td>{{data.designation}}</td>-->
+                <td>{{data.empname}}</td>
+                <!--<td>{{data.qualification}}</td>-->
+            </tr>
+        </table>
+
+    </div>
+
+    
+</body>
+
+</html>
